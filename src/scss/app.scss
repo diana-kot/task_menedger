@@ -1,0 +1,28 @@
+@import "variables";
+@import "normalize";
+
+body {
+  @media (max-width: 768px) {
+    padding: 20px 0;
+  }
+}
+
+.wrapper {
+  // width: calc(100vw - 100px);
+  height: 100%;
+  background-color: #efefef;
+  margin: 0 auto;
+  max-width: 1400px;
+  // padding: 0 15px;
+  @media (max-width: 768px) {
+    width: calc(100% - 40px);
+  }
+}
+
+.content {
+}
+
+.container {
+  // width: $container-width;
+  margin: 0 auto;
+}
