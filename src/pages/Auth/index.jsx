@@ -1,6 +1,4 @@
-import PropTypes from "prop-types";
-
-import { LoginForm } from "@components";
+import LoginForm from "../../modules/LoginForm";
 import styles from "./Auth.scss";
 
 const Auth = () => {
@@ -13,8 +11,6 @@ const Auth = () => {
   );
 };
 
-Auth.propTypes = {
-  text: PropTypes.string,
-};
+
 
 export default Auth;

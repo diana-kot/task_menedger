@@ -1,0 +1,142 @@
+.tasks {
+  &:not(:last-of-type) {
+    margin-bottom: 40px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  &__title {
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 39px;
+    color: #163746;
+    padding-bottom: 20px;
+
+    &:hover {
+      img {
+        opacity: 0.2;
+      }
+    }
+
+    img {
+      opacity: 0;
+      cursor: pointer;
+      margin-left: 15px;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  &__form {
+    // position: relative;
+    margin-top: 120px;
+
+    &-input {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    &-block {
+      .button {
+        margin-right: 10px;
+        margin-top: 15px;
+      }
+    }
+
+    &-new {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      opacity: 1;
+      transition: opacity 0.15s ease-in-out;
+
+      &:hover {
+        opacity: 0.8;
+      }
+
+      img {
+        width: 16px;
+        height: 16px;
+        margin-left: 4px;
+      }
+
+      span {
+        font-size: 16px;
+        margin-left: 19px;
+      }
+    }
+  }
+
+  &__items {
+    margin-top: 30px;
+
+    &-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+
+      &:hover &-actions {
+        opacity: 1;
+      }
+
+      &-actions {
+        display: flex;
+        opacity: 0;
+        transition: opacity 0.15s ease-in-out;
+
+        div {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 32px;
+          height: 32px;
+          background-color: lighten(black, 2%);
+          border-radius: 6px;
+          margin-left: 5px;
+          cursor: pointer;
+
+          &:hover {
+            background-color: darken(black, 2%);
+            svg {
+              opacity: 0.9;
+            }
+          }
+
+          svg {
+            width: 11px;
+            height: 11px;
+            opacity: 0.4;
+          }
+        }
+      }
+
+      p {
+        margin-left: 15px;
+        border: 0;
+        font-size: 16px;
+        width: 100%;
+      }
+    }
+  }
+
+
+}
+
+.block__task {
+  // display: flex;
+  // gap: 20px;
+  // justify-content: center;
+  position: absolute;
+  // top: 30%;
+  // left: 30%;
+}
+
+.ant-form .block {
+  display: flex;
+}

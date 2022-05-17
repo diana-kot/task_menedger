@@ -1,5 +1,7 @@
 @import "variables";
 @import "normalize";
+@import "~antd/dist/antd.css";
+@import "~bootstrap/scss/bootstrap";
 
 body {
   @media (max-width: 768px) {
@@ -13,7 +15,7 @@ body {
   background-color: #efefef;
   margin: 0 auto;
   max-width: 1400px;
-  // padding: 0 15px;
+  padding: 0 65px;
   @media (max-width: 768px) {
     width: calc(100% - 40px);
   }
