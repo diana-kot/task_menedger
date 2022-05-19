@@ -1,18 +1,19 @@
 import { Route, Routes } from "react-router-dom";
 import { TaskPage, Auth } from "@pages";
-import { Head } from "@components";
+
+import cn from "classnames";
 
 function App() {
   return (
-    <div className="wrapper">
-      <Head />
-      <div className="content">
+    <div className={cn('wrapper', 'wrapper__container', 'container')}>
+     
+      <main className="main">
         <Routes>
           <Route path="/" element={<TaskPage />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="*" element={<h2>404</h2>} />
         </Routes>
-      </div>
+      </main>
     </div>
   );
 }

@@ -3,6 +3,16 @@ $background: #ffdf8c;
 $gray-line: #f6f6f6;
 $orange: #fe5f1e;
 
+$colorDark: #333333;
+
 $container-width: 90%;
 
 $duration: 0.15s;
+
+
+$widthSite: 1140px;
+$widthSiteSml: 736px;
+$maxWidth: 1180px;
+$maxWidthChannel: 1196px;
+$gapGrid: 20px;
+$contentCol4: ($widthSite - 2 * $gapGrid) / 3;

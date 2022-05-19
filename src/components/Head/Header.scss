@@ -1,8 +1,6 @@
 .header {
-  // position: fixed;
-  width: 100%;
-  transition: 0.2s linear;
-  padding-bottom: 20px;
+  margin-bottom: 42px;
+  padding-top: 34px;
 
   &_active {
     background: #0e1d28;
@@ -10,21 +8,15 @@
 
   &__wrapper {
     display: flex;
-    background: #e0ffff;
-  }
-
-  &__nav {
-    padding: 25px;
+    height: 40px;
+    align-items: center;
   }
 
   &__list {
     display: flex;
+    gap: 40px;
     margin-bottom: 0px;
     align-items: center;
-  }
-
-  &__item {
-    margin-right: 82px;
   }
 
   &__item:last-child {
@@ -32,7 +24,7 @@
   }
 
   &__link {
-    font-size: 18px;
+    font-size: 20px;
     line-height: 24px;
     color: Blue;
     text-decoration: none;

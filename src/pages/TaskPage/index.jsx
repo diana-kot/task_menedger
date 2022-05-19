@@ -1,11 +1,13 @@
 import TaskList  from "@components/Tasks/TaskList";
+import { Head } from "@components";
 
 import "./TaskPage.scss";
 
 const TaskPage = () => {
   return (
     <>
-      <div className="main">
+    <Head/>
+     <div>
         <TaskList/>
       </div>
     </>

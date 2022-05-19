@@ -5,6 +5,9 @@
   height: 100vh;
 
   &__top {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
     text-align: center;
     margin-bottom: 50px;
     h2 {
@@ -16,6 +19,16 @@
       line-height: 21px;
       letter-spacing: 0.1px;
       opacity: 0.5;
+    }
+    img {
+      position: absolute;
+      right: 20px;
+      top: 30px;
+      cursor: pointer;
+      transition: .3s;
+      &:hover {
+        opacity: 0.8;
+      }
     }
   }
 

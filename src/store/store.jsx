@@ -3,17 +3,18 @@ import thunk from "redux-thunk";
 
 import { combineReducers } from "redux";
 
-import { authReducer } from "./auth/reducer";
+import { authReducer } from "./Auth/reducer";
+import { tasksReducer } from "./GetTask/reducer";
 
 const rootReducer = combineReducers({
-    auth: authReducer,
- 
+  auth: authReducer,
+  tasks: tasksReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
-    rootReducer,
+  rootReducer,
   composeEnhancers(applyMiddleware(thunk))
 );
-export default store
+export default store;

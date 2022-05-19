@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 import { Form, Input } from "antd";
-import { Button, Block } from "@components";
+import { Button } from "@components";
+
+import closeSvg from "@assets/img/close.svg";
 
 import styles from "./LoginForm.scss";
 
-const validate = (key, touched, errors, ) => {
+const validate = (key, touched, errors) => {
   if (touched[key]) {
     if (errors[key]) {
       return "error";
@@ -15,7 +18,7 @@ const validate = (key, touched, errors, ) => {
   } else {
     return "";
   }
-}
+};
 
 const LoginForm = (props) => {
   const {
@@ -31,48 +34,53 @@ const LoginForm = (props) => {
 
   return (
     <div>
-      <div className="auth__top">
-        <h2>Войти в аккаунт</h2>
+      <div className="modal__over">
+        <div className="modal__content">
+          <div className="auth__top">
+            <Link to={"/"}>
+              <img src={closeSvg} alt="Close icon" />
+            </Link>
+            <h2>Авторизация</h2>
+          </div>
+          <Form onSubmit={handleSubmit} className="login-form">
+            <Form.Item
+              validateStatus={validate("login", touched, errors)}
+              help={!touched.login ? "" : errors.login}
+              hasFeedback
+            >
+              <Input
+                id="login"
+                size="large"
+                placeholder="Логин"
+                value={values.login}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </Form.Item>
+            <Form.Item
+              validateStatus={validate("password", touched, errors)}
+              help={!touched.password ? "" : errors.password}
+              hasFeedback
+            >
+              <Input
+                id="password"
+                size="large"
+                type="password"
+                placeholder="Пароль"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </Form.Item>
+            <Form.Item>
+              {isSubmitting && !isValid && <span>Ошибка!</span>}
+              <Button type="submit" size="large">
+                Войти в аккаунт
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
       </div>
-      <Block>
-        <Form onSubmit={handleSubmit} className="login-form">
-          <Form.Item
-          validateStatus={validate("login", touched, errors)}
-            help={!touched.login ? "" : errors.login}
-            hasFeedback
-          >
-            <Input
-              id="login"
-              size="large"
-              placeholder="Логин"
-              value={values.login}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-          </Form.Item>
-          <Form.Item
-            validateStatus={validate("password", touched, errors)}
-            help={!touched.password ? "" : errors.password}
-            hasFeedback
-          >
-            <Input
-              id="password"
-              size="large"
-              type="password"
-              placeholder="Пароль"
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-          </Form.Item>
-          <Form.Item>
-            {isSubmitting && !isValid && <span>Ошибка!</span>}
-            <Button onClick={handleSubmit} type="primary" size="large">
-              Войти в аккаунт
-            </Button>
-          </Form.Item>
-        </Form>
-      </Block>
     </div>
   );
 };

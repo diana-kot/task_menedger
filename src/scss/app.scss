@@ -4,27 +4,47 @@
 @import "~bootstrap/scss/bootstrap";
 
 body {
-  @media (max-width: 768px) {
-    padding: 20px 0;
-  }
+  height: 100%;
+  line-height: 1;
+  font-size: 14px;
+  font-weight: 400;
+  color: $colorDark;
 }
 
 .wrapper {
-  // width: calc(100vw - 100px);
-  height: 100%;
-  background-color: #efefef;
-  margin: 0 auto;
-  max-width: 1400px;
-  padding: 0 65px;
-  @media (max-width: 768px) {
-    width: calc(100% - 40px);
-  }
+  min-height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
-.content {
+.wrapper__container {
+  flex: 1 1 auto;
+}
+
+.main {
+  flex: 1 1 auto;
 }
 
 .container {
-  // width: $container-width;
-  margin: 0 auto;
+  padding-left: calc(50% - #{$maxWidth / 2});
+  padding-right: calc(50% - #{$maxWidth / 2});
+}
+
+
+@media (max-width: 1023px) {
+  .container {
+    padding-left: calc(50% - #{$widthSiteSml / 2});
+    padding-right: calc(50% - #{$widthSiteSml / 2});
+  }
+
+}
+
+
+@media (max-width: 767px) {
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
 }
