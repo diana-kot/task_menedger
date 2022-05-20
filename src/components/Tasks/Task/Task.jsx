@@ -30,7 +30,7 @@ const Task = ({ task }) => {
   const [text, setText] = useState(task.text);
 
   const renderText = () => {
-    if (!user.isLoggedIn) {
+    if (!user.isAuth) {
       return task.text;
     }
     return (
@@ -49,7 +49,7 @@ const Task = ({ task }) => {
   };
 
   const rendeCheckboxForAdmin = () => {
-    if (user.isLoggedIn) {
+    if (user.isAuth) {
       return (
         <Checkbox checked={task.status === 10} onChange={onChangeCheckbox} />
       );

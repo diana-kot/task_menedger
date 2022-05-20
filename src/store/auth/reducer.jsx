@@ -1,29 +1,27 @@
-import {AUTH_CHANGE_AUTH, AUTH_CHANGE_LOGIN_TEXT, AUTH_CHANGE_PASSWORD_TEXT} from "./actions";
+import { AUTH_SET_DATA, USER_SET_IS_AUTH } from "./actions";
 
-const defaultState = {
-    login: '',
-    password: '',
-    auth: false,
-    token: ''
-}
+const userState = {
+  data: null,
+  token: localStorage.getItem("user_auth_token") || null,
+  isAuth: !!localStorage.getItem("user_auth_token"),
+};
 
-export const authReducer = (state  = defaultState, action) => {
-    switch (action.type) {
-        case AUTH_CHANGE_LOGIN_TEXT:
-            return {
-                ...state,
-                login: action.payload
-            };
-        case AUTH_CHANGE_PASSWORD_TEXT:
-            return {
-                ...state,
-                password: action.payload
-            };
-        case AUTH_CHANGE_AUTH:
-            return {
-                ...state,
-                auth: action.payload
-            };
-        default: return state
-    }
-}
+export const authReducer = (state = userState, { type, payload }) => {
+  switch (type) {
+    case AUTH_SET_DATA:
+      return {
+        ...state,
+        data: payload,
+        isAuth: true,
+        token: localStorage.getItem("user_auth_token"),
+      };
+    case USER_SET_IS_AUTH:
+      return {
+        ...state,
+        isAuth: payload,
+      };
+
+    default:
+      return state;
+  }
+};

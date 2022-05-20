@@ -1,29 +1,20 @@
 export default ({ isAuth, values, errors }) => {
   const rules = {
-    email: (value) => {
-      if (!value) {
-        errors.email = "Введите E-Mail";
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-        errors.email = "Неверный E-Mail";
-      }
-    },
-    login: (value) => {
+    username: (value) => {
       if (isAuth && !value) {
-        errors.login = "Укажите логин";
+        errors.username = "Укажите логин";
       }
 
-      // else if (!/admin/.test(value)) {
+      // else if (!/^admin/.test(value)) {
       //   errors.password = "Неверный логин";
       // }
     },
     password: (value) => {
       if (!value) {
         errors.password = "Введите пароль";
+      } else if (isAuth && !/(?=.*[0-3])(?=.{3,})/.test(value)) {
+        errors.password = "Неверный пароль";
       }
-
-      // else if (!/(?=.*[0-3])(?=.{3,})/.test(value)) {
-      //   errors.password = "Неверный пароль";
-      // }
     },
   };
 
