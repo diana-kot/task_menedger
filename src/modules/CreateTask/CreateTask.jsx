@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Input, Form, Button } from "antd";
 
+import { openNotification } from "@utils/helpers";
+
 import { Block } from "@components";
 import { useDispatch } from "react-redux";
 import "./CreateTask.scss";
 
-import { getsTasksload } from "@store/GetTask/actions";
+import { loadTasks } from "@store/GetTask/actions";
 
 import { addTask } from "@utils/api";
 
@@ -36,9 +38,6 @@ const tailFormItemLayout = {
 
 const CreateTask = () => {
   const [form] = Form.useForm();
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
-  };
 
   const dispatch = useDispatch();
   const [visibleForm, setFormVisible] = useState(false);
@@ -53,22 +52,20 @@ const CreateTask = () => {
   };
 
   const handleSubmitFormTask = async (values) => {
-    console.log(1);
     try {
-      console.log(1);
       await addTask(username, email, text);
-
-      console.log({
-        message: "Задача успешно добавлена",
-        timeout: 2000,
+      openNotification({
+        title: "Задача",
+        text: "Задача успешно добавлена",
+        type: "success",
       });
-
-      dispatch(getsTasksload());
+      dispatch(loadTasks());
       setIsLoading(false);
       setFormVisible(false);
       form.resetFields();
     } catch (ex) {
       form.resetFields();
+      setIsLoading(false);
       const errMessage = ex.payload.message;
       if (Object.keys(errMessage).length > 0) {
         return Object.keys(errMessage).map((key) =>
@@ -78,9 +75,11 @@ const CreateTask = () => {
           })
         );
       }
-      console.log({
-        message: "Возникла непредвиденная ошибка",
-        timeout: 2000,
+      setIsLoading(false);
+      openNotification({
+        title: "Задача",
+        text: "Возникла непредвиденная ошибка",
+        type: "error",
       });
     }
     return null;
@@ -94,109 +93,109 @@ const CreateTask = () => {
           <span>Новая задача</span>
         </div>
       ) : (
-          <div className="modal__over">
-            <div className="modal__content">
-              <div>
-                <h5 className="tasks__form-title">Добавление новой задачи</h5>
-                <div className="tasks__form-block">
-                  <Form
-                    {...formItemLayout}
-                    onFinish={handleSubmitFormTask}
-                    labelCol={{ span: 8 }}
-                    wrapperCol={{ span: 16 }}
-                    form={form}
-                    layout="horizontal"
-                    name="basic"
-                    initialValues={{
-                      residence: ["zhejiang", "hangzhou", "xihu"],
-                      prefix: "86",
-                    }}
-                    scrollToFirstError
-                  >
-                    <div className="tasks__form-input">
-                      <Form.Item
-                        name="username"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Напишите имя",
-                            whitespace: true,
-                          },
-                        ]}
+        <div className="modal__over">
+          <div className="modal__content">
+            <div>
+              <h5 className="tasks__form-title">Добавление новой задачи</h5>
+              <div className="tasks__form-block">
+                <Form
+                  {...formItemLayout}
+                  onFinish={handleSubmitFormTask}
+                 
+                  labelCol={{ span: 8 }}
+                  wrapperCol={{ span: 16 }}
+                  form={form}
+                  layout="horizontal"
+                  name="basic"
+                  initialValues={{
+                    residence: ["zhejiang", "hangzhou", "xihu"],
+                    prefix: "86",
+                  }}
+                  scrollToFirstError
+                >
+                  <div className="tasks__form-input">
+                    <Form.Item
+                      name="username"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Напишите имя",
+                          whitespace: true,
+                        },
+                      ]}
+                    >
+                      <Input
+                        size="large"
+                        value={username}
+                        className="field"
+                        type="text"
+                        placeholder="Имя пользователя"
+                        onChange={(e) => setUsername(e.target.value)}
+                      />
+                    </Form.Item>
+                    <Form.Item
+                      name="email"
+                      rules={[
+                        {
+                          type: "email",
+                          message: "Невалидный E-mail",
+                        },
+                        {
+                          required: true,
+                          message: "Напишите E-mail",
+                        },
+                      ]}
+                    >
+                      <Input
+                        size="large"
+                        value={email}
+                        className="field"
+                        type="email"
+                        placeholder="e-mail"
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                    </Form.Item>
+                    <Form.Item
+                      name="text"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Напишите текст задачи",
+                          whitespace: true,
+                        },
+                      ]}
+                    >
+                      <Input
+                        size="large"
+                        value={text}
+                        className="field"
+                        type="text"
+                        placeholder="Текст задачи"
+                        onChange={(e) => setText(e.target.value)}
+                      />
+                    </Form.Item>
+                  </div>
+                  <div className="tasks__buttons">
+                    <Form.Item {...tailFormItemLayout}>
+                      <Button
+                        disabled={isLoading}
+                        className="button"
+                        htmlType="submit"
                       >
-                        <Input
-                          size="large"
-                          value={username}
-                          className="field"
-                          type="text"
-                          placeholder="Имя пользователя"
-                          onChange={(e) => setUsername(e.target.value)}
-                        />
-                      </Form.Item>
-                      <Form.Item
-                        name="email"
-                        rules={[
-                          {
-                            type: "email",
-                            message: "Невалидный E-mail",
-                          },
-                          {
-                            required: true,
-                            message: "Напишите E-mail",
-                          },
-                        ]}
-                      >
-                        <Input
-                          size="large"
-                          value={email}
-                          className="field"
-                          type="email"
-                          placeholder="e-mail"
-                          onChange={(e) => setEmail(e.target.value)}
-                        />
-                      </Form.Item>
-                      <Form.Item
-                        name="text"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Напишите текст задачи",
-                            whitespace: true,
-                          },
-                        ]}
-                      >
-                        <Input
-                          size="large"
-                          value={text}
-                          className="field"
-                          type="text"
-                          placeholder="Текст задачи"
-                          onChange={(e) => setText(e.target.value)}
-                        />
-                      </Form.Item>
-                    </div>
-                    <div className="tasks__buttons">
-                      <Form.Item {...tailFormItemLayout}>
-                        <Button
-                          disabled={isLoading}
-                          className="button"
-                          htmlType="submit"
-                        >
-                          {isLoading ? "Добавление..." : "Добавить задачу"}
-                        </Button>
-                      </Form.Item>
-                      <Form.Item {...tailFormItemLayout}>
-                        <Button onClick={toggleFormVisible} className="button">
-                          Отмена
-                        </Button>
-                      </Form.Item>
-                    </div>
-                  </Form>
-                </div>
+                        {isLoading ? "Добавление..." : "Добавить задачу"}
+                      </Button>
+                    </Form.Item>
+                    <Form.Item {...tailFormItemLayout}>
+                      <Button onClick={toggleFormVisible} className="button">
+                        Отмена
+                      </Button>
+                    </Form.Item>
+                  </div>
+                </Form>
               </div>
             </div>
           </div>
-      
+        </div>
       )}
     </div>
   );

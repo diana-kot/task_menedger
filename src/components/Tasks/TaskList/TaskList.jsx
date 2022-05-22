@@ -1,12 +1,11 @@
 import TaskTable from "../TaskTable";
 
-// import "./TaskList.scss";
+import "./TaskList.scss";
 
 const TaskList = () => {
   return (
     <>
-
-      <h3>Таблица задач</h3>
+      <h3 className="table__tatle">Таблица задач</h3>
       <TaskTable/>
   
     </>

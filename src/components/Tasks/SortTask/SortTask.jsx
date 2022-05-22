@@ -6,10 +6,10 @@ import "./SortTask.scss";
 
 const SortTask = ({ children, className, onClick, sortDirection, style }) => {
   return (
-    <th className={className} onClick={onClick} style={style}>
+    <th onClick={onClick} style={style}>
       {children}
-      {sortDirection === "desc" && <CaretDownOutlined />}{" "}
-      {sortDirection === "asc" && <CaretUpOutlined />}
+      {sortDirection === "desc" || <CaretDownOutlined />}
+      {sortDirection === "asc" || <CaretUpOutlined />}
     </th>
   );
 };

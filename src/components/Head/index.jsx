@@ -1,20 +1,24 @@
-import PropTypes from "prop-types";
+import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { Button } from "@components";
+import { LoginButton } from "@components";
 import CreateTask from "../../modules/CreateTask/CreateTask";
+import Login from "../../modules/Login/Login";
 
+import { closeLoginPopup } from "../../store/Auth/actions";
 import styles from "./Header.scss";
 
 const Header = () => {
+
+  const isLoginPopupOpen = useSelector(state => state.tasksReducer);
+
+  const dispatch = useDispatch();
   return (
     <header className="header">
       <div className="header__wrapper">
         <nav className="header__nav">
           <ul className="header__list">
             <li className="header__item">
-              <NavLink className="header__link" to="/auth">
-                <Button>Войти</Button>
-              </NavLink>
+            <Login/>
             </li>
             <li className="header__item">
               <NavLink className="header__link" to="/">
@@ -26,13 +30,13 @@ const Header = () => {
             </li>
           </ul>
         </nav>
+
+      
       </div>
     </header>
   );
 };
 
-Header.propTypes = {
-  text: PropTypes.string,
-};
+
 
 export default Header;

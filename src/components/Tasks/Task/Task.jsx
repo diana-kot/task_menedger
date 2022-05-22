@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import { authSelector } from "@store/Auth/selector";
+import { taskSelector } from "@store/GetTask/selector";
 import { Checkbox, Input } from "antd";
 
 import { editTask } from "@store/GetTask/actions";
@@ -23,35 +25,55 @@ const convertStatusToText = (statusCode) => {
 };
 
 const Task = ({ task }) => {
+
+
   const dispatch = useDispatch();
+  const { isAuth } = useSelector(authSelector);
 
-  const user = useSelector((state) => state.user);
 
-  const [text, setText] = useState(task.text);
+  // const tasks = useSelector(taskSelector);
+
+  const {
+    tasksCount,
+    page,
+    isTasksLoading,
+    isTasksLoadingFailed,
+    sortField,
+    sortDirection,
+  } = useSelector(({ tasks }) => tasks);
+
+   const [text, setText] = useState(task.text);
+  
+  const handleBlur = () => {
+    dispatch(editTask(task.id, text));
+  };
 
   const renderText = () => {
-    if (!user.isAuth) {
+    if (!isAuth) {
       return task.text;
     }
     return (
       <Input
-        placeholder="Edit report..."
+        placeholder="Изменить текст..."
         value={text}
-        onChange={setText}
-        onConfirm={() => dispatch(editTask(task.id, text))}
+        onChange={(e)=>setText(e.target.value)}
+        onBlur={handleBlur}
       />
     );
   };
 
   const onChangeCheckbox = (e) => {
     const newStatus = e.target.checked ? 11 : 0;
-    dispatch(editTask(task.id, undefined, newStatus));
+    dispatch(editTask(task.id, newStatus));
   };
 
   const rendeCheckboxForAdmin = () => {
-    if (user.isAuth) {
+    if (isAuth) {
       return (
-        <Checkbox checked={task.status === 10} onChange={onChangeCheckbox} />
+        <Checkbox
+          checked={task.status === 0}
+          onChange={onChangeCheckbox}
+        />
       );
     }
     return null;

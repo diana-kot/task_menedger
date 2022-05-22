@@ -1,4 +1,4 @@
-import LoginForm from "../../modules/LoginForm";
+import Login from "../../modules/Login";
 import styles from "./Auth.scss";
 
 const Auth = () => {
@@ -6,7 +6,7 @@ const Auth = () => {
     
       <section className="auth">
         <div className="auth__content">
-          <LoginForm />
+          <Login />
         </div>
       </section>
    

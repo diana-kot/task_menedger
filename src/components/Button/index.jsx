@@ -1,4 +1,4 @@
-import PropTypes from "prop-types";
+
 import cn from 'classnames'
 
 
@@ -15,8 +15,5 @@ const Button = props => {
 };
 
 
-Button.propTypes = {
- className: PropTypes.string,
-};
 
 export default Button;

@@ -1,26 +1,55 @@
-import { AUTH_SET_DATA, USER_SET_IS_AUTH } from "./actions";
+import {
+  LOGIN_IN_PROGRESS,
+  LOGIN_FAILED,
+  LOGIN_SUCCESS,
+  LOGOUT,
+  LOGIN_POPUP_OPEN,
+  LOGIN_POPUP_CLOSE
+} from "./actions";
 
-const userState = {
-  data: null,
-  token: localStorage.getItem("user_auth_token") || null,
-  isAuth: !!localStorage.getItem("user_auth_token"),
+export const userState = {
+  isAuth: !!window.localStorage.getItem("user_auth_token"),
+  isLoginInProgress: false,
+  token: window.localStorage.getItem("user_auth_token") || null,
+  isLoginPopupOpen: false
 };
 
 export const authReducer = (state = userState, { type, payload }) => {
   switch (type) {
-    case AUTH_SET_DATA:
+    case LOGOUT:
       return {
         ...state,
-        data: payload,
+        isAuth: false,
+        token: null,
+      };
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        token: payload,
         isAuth: true,
-        token: localStorage.getItem("user_auth_token"),
+        isLoginInProgress: false,
+        isLoginPopupOpen: false
       };
-    case USER_SET_IS_AUTH:
+    case LOGIN_FAILED:
       return {
         ...state,
-        isAuth: payload,
+        isLoginInProgress: false,
       };
-
+      case LOGIN_IN_PROGRESS:
+        return {
+          ...state,
+          isLoginInProgress: true,
+        };
+        case LOGIN_POPUP_OPEN:
+        return {
+          ...state,
+          isLoginPopupOpen: true,
+        };
+        case LOGIN_POPUP_CLOSE:
+        return {
+          ...state,
+          isLoginPopupOpen: false,
+        };
     default:
       return state;
   }

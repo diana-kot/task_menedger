@@ -1,84 +1,80 @@
 import {
-  GET_TASK_REQUEST,
-  GET_TASK_SUCCESS,
-  GET_TASK_FAILURE,
+  TASK_LOADING_IN_PROGRESS,
+  TASK_LOADING_FAILURE,
+  TASK_LOADING_SUCCESS,
   CHANGE_SORT,
   EDIT_TASK_SUCCESS,
   EDIT_TASK_FAILURE,
+  TASKS_CHANGE_PAGE,
+  TASKS_CHANGE_TOTAL_TASK_COUNT,
 } from "./actions";
 
-const initialState = {
+export const taskState = {
+  tasks: [],
   isTasksLoading: false,
   isTasksLoadingFailed: false,
-  tasks: [],
   tasksCount: 0,
   page: 1,
+  isAddTaskPopupOpen: false,
   sortField: "id",
   sortDirection: "asc",
 };
 
-export const tasksReducer = (state = initialState, action) => {
+export const tasksReducer = (state = taskState, action) => {
   switch (action.type) {
-    case GET_TASK_REQUEST: {
+    case CHANGE_SORT: {
+      return {
+        ...state,
+        sortField: action.payload.sortField,
+        sortDirection: action.payload.sortDirection,
+      };
+    }
+    case TASKS_CHANGE_PAGE:
+      return {
+        ...state,
+        page: action.payload,
+      };
+    case TASKS_CHANGE_TOTAL_TASK_COUNT:
+      return {
+        ...state,
+        total_task_count: action.payload,
+      };
+    case EDIT_TASK_SUCCESS:
+      return {
+        ...state,
+        tasks: state.tasks.map((task) =>
+          task.id === action.payload.taskId
+            ? {
+                id: action.payload.taskId,
+                email: task.email,
+                username: task.username,
+                text: action.payload.text,
+                status: action.payload.status,
+              }
+            : task
+        ),
+      };
+    case TASK_LOADING_FAILURE:
+      return {
+        ...state,
+        isTasksLoading: false,
+        isTasksLoadingFailed: true,
+      };
+    case TASK_LOADING_IN_PROGRESS:
       return {
         ...state,
         isTasksLoading: true,
         isTasksLoadingFailed: false,
       };
-    }
-    case GET_TASK_SUCCESS: {
+    case TASK_LOADING_SUCCESS:
       return {
         ...state,
         isTasksLoading: false,
         isTasksLoadingFailed: false,
-        tasks: action.asksObject.tasks,
-        tasksCount: action.tasksObject.total_task_count,
+        tasks: action.payload,
+        tasksCount: action.total_task_count,
         page: action.page,
       };
-    }
-    case EDIT_TASK_FAILURE: {
-      return {
-        ...state,
-        isTasksLoading: false,
-        isTasksLoadingFailed: true,
-      };
-    }
-    case GET_TASK_FAILURE: {
-      return {
-        ...state,
-        isTasksLoading: false,
-        isTasksLoadingFailed: true,
-      };
-    }
-    //сортировка
-    case CHANGE_SORT: {
-      return {
-        ...state,
-        sortField: action.sortField,
-        sortDirection: action.sortDirection,
-      };
-    }
-    // редактирование
-    case EDIT_TASK_SUCCESS: {
-      return {
-        ...state,
-        tasks: state.tasks.map((task) =>
-          task.id === action.taskId
-            ? {
-                id: action.taskId,
-                username: task.username,
-                email: task.email,
-                text: action.text ? action.text : task.text,
-                status:
-                  action.status || action.status === 0
-                    ? action.status
-                    : task.status,
-              }
-            : task
-        ),
-      };
-    }
-
     default:
       return state;
   }
