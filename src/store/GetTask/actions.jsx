@@ -22,6 +22,8 @@ export const setTasksPage = (page) => ({
   payload: page,
 });
 
+
+
 export const setTasksTotalTaskCount = (total_task_count) => ({
   type: TASKS_CHANGE_TOTAL_TASK_COUNT,
   payload: total_task_count,
@@ -32,10 +34,9 @@ export const loadTasksFailure = (error) => ({
   payload: error,
 });
 
-export const loadTasksSuccess = (tasks, page) => ({
+export const loadTasksSuccess = (tasks, page, tasksCount) => ({
   type: TASK_LOADING_SUCCESS,
-  payload: tasks,
-  page,
+  payload: tasks, page, tasksCount
 });
 
 export const loadTasksInProgress = () => ({
@@ -58,7 +59,7 @@ export const loadTasks = () => async (dispatch, getState) => {
       if (body.status !== "ok") {
         dispatch(loadTasksFailure(body.message));
       } else {
-        dispatch(loadTasksSuccess(body.message.tasks));
+        dispatch(loadTasksSuccess(body.message));
       }
     });
   });
@@ -87,10 +88,11 @@ export const setSorting = (sortField, sortDirection) => ({
   payload: { sortField, sortDirection },
 });
 
-export const changeSort = (sortField, sortDirection, page) => {
+export const changeSort = (sortField, sortDirection) => {
   return (dispatch, getState) => {
+    const page = getState().tasks.page;
     dispatch(setSorting(sortField, sortDirection));
-    dispatch(loadTasks(getState().tasks.page));
+    dispatch(loadTasks(page));
   };
 };
 

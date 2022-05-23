@@ -1,16 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import styled from "styled-components";
 import { taskSelector } from "@store/GetTask/selector";
-import { Spin, Space, List } from "antd";
+import { Spin, Space } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 
-import {
-  FileExcelOutlined,
-  LeftCircleOutlined,
-  RightCircleOutlined,
-} from "@ant-design/icons";
-
-import { loadTasks, changeSort } from "@store/GetTask/actions";
+import { loadTasks, changeSort, setTasksPage } from "@store/GetTask/actions";
 
 import SortTask from "../SortTask";
 import TaskNavigation from "../TaskNavigation";
@@ -22,21 +16,15 @@ const TaskTable = () => {
   const dispatch = useDispatch();
 
   const tasks = useSelector(taskSelector);
+  // const tasks = useSelector(state => state.tasks.tasks);
+  const { tasksCount, page, isTasksLoading, sortField, sortDirection } =
+    useSelector(({ tasks }) => tasks);
 
-  const {
-    tasksCount,
-    page,
-    isTasksLoading,
-    isTasksLoadingFailed,
-    sortField,
-    sortDirection,
-  } = useSelector(({ tasks }) => tasks);
-
-  const pagesCount = Math.ceil(tasksCount / 3);
-
+  const pagesCount = tasksCount;
+  const [activePage, setActivePage] = useState(page);
   const handleHeaderClick = (headerKey) => {
     return () => {
-       console.log(sortField)
+      //  console.log(sortField)
       if (tasks.sortField === headerKey) {
         dispatch(
           changeSort(headerKey, tasks.sortDirection === "asc" ? "desc" : "asc")
@@ -48,28 +36,18 @@ const TaskTable = () => {
   };
 
   const getSortDirection = (headerKey) => {
-    // console.log(sortDirection)
     return tasks.sortField === headerKey ? tasks.sortDirection : null;
   };
 
-  const changePage = (pageNumber) => {
-    dispatch(loadTasks(pageNumber));
+  const onchangePage = (pageNamber) => {
+    dispatch(setTasksPage(pageNamber));
+    dispatch(loadTasks(pageNamber));
+    setActivePage(pageNamber);
   };
-
-  const nextPage = () => page((prev) => prev + 1);
-  const prevPage = () => page((prev) => prev - 1);
 
   React.useEffect(() => {
     dispatch(loadTasks(sortField, sortField));
   }, [sortField, sortDirection]);
-
-  // const onAddTask = (taskObj) => {
-  //   const newList = tasks.map((task) => {
-  //     task.tasks = [...task.tasks, taskObj];
-  //     return task;
-  //   });
-  //   loadTasks(newList);
-  // };
 
   return (
     <>
@@ -121,15 +99,9 @@ const TaskTable = () => {
       <TaskNavigation
         pagesCount={pagesCount}
         currentPage={page}
-        changePage={changePage}
+        changePage={onchangePage}
+        activePage={activePage}
       />
-
-      <button className="btn btn-primary" onClick={prevPage}>
-        <LeftCircleOutlined />
-      </button>
-      <button className="btn btn-primary" onClick={nextPage}>
-        <RightCircleOutlined />
-      </button>
     </>
   );
 };
@@ -137,10 +109,3 @@ const TaskTable = () => {
 export default styled(TaskTable)`
   with: 100%;
 `;
-
-//   const [currentPage, setCurrentPage] = useState(1);
-//   const [tasksPerPage] = useState(3);
-
-//   const lastTaskIndex = currentPage * tasksPerPage;
-//   const firstTaskIndex = lastTaskIndex - tasksPerPage;
-//   const currentTask = tasks.slice(firstTaskIndex, lastTaskIndex);

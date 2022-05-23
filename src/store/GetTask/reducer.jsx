@@ -27,6 +27,7 @@ export const tasksReducer = (state = taskState, action) => {
         ...state,
         sortField: action.payload.sortField,
         sortDirection: action.payload.sortDirection,
+        
       };
     }
     case TASKS_CHANGE_PAGE:
@@ -71,8 +72,8 @@ export const tasksReducer = (state = taskState, action) => {
         ...state,
         isTasksLoading: false,
         isTasksLoadingFailed: false,
-        tasks: action.payload,
-        tasksCount: action.total_task_count,
+        tasks: action.payload.tasks,
+        tasksCount: parseInt(action.payload.total_task_count),
         page: action.page,
       };
     default:

@@ -1,33 +1,57 @@
-import React, { useState } from "react";
+import React from "react";
+import cn from "classnames";
+import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
+
 import "./TaskNavigation.scss";
 
-const TaskNavigation = ({ currentPage, pagesCount, changePage }) => {
+const TaskNavigation = ({
+  activePage,
+  pagesCount,
+  changePage,
+  currentPage,
+}) => {
   const pages = [];
 
-  for (let pageNumber = 1; pageNumber <= Math.ceil(pagesCount / currentPage); pageNumber++) {
-    if (pageNumber === currentPage) {
+  for (let i = 1; i <= Math.ceil(pagesCount / 3); i++) {
+    if (i === currentPage) {
       pages.push(
         <li
-          key={pageNumber}
-          style={{ backgroundColor: "red" }}
-          onClick={() => changePage(pageNumber)}
-          disabled={pageNumber>pagesCount || pageNumber<=0}
+          className={cn({ "page__item-active": activePage === i })}
+          key={i}
+          onClick={() => changePage(i)}
+          disabled={i > pagesCount || i <= 0}
         >
-          {pageNumber}
+          {i}
         </li>
       );
     } else
       pages.push(
-        <li key={pageNumber} onClick={() => changePage(pageNumber)}>
-          {pageNumber}
+        <li className="page__item" key={i} onClick={() => changePage(i)}>
+          {i}
         </li>
       );
   }
 
   return (
-    <div>
-      <ul className="padination">{pages}</ul>
-    </div>
+    <>
+      <div className="center">
+        <ul className="padination">
+          <li
+            className="btn btn-primary"
+            onClick={() => changePage(activePage - 1)}
+          >
+            <LeftCircleOutlined />
+          </li>
+          {pages}
+          <li
+            className="btn btn-primary"
+            onClick={() => changePage(activePage + 1)}
+          >
+            <RightCircleOutlined />
+          </li>
+        </ul>
+      </div>
+    </>
   );
 };
 

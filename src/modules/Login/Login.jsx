@@ -43,7 +43,7 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const user = useSelector((state) => state.authReducer);
+  // const user = useSelector((state) => state.authReducer);
 
   const toggleFormVisible = () => {
     setFormVisible(!visibleForm);

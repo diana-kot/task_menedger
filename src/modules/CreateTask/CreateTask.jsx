@@ -3,7 +3,7 @@ import { Input, Form, Button } from "antd";
 
 import { openNotification } from "@utils/helpers";
 
-import { Block } from "@components";
+
 import { useDispatch } from "react-redux";
 import "./CreateTask.scss";
 
