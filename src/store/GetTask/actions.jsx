@@ -73,19 +73,18 @@ export const changeSort = (sortField, sortDirection) => {
 
 export const setSorting = (sortField, sortDirection) => ({
   type: CHANGE_SORT,
-  payload: {sortField, sortDirection}
+  payload: { sortField, sortDirection },
 });
-
 
 export const editTaskSuccess = (taskId, text, status) => ({
   type: EDIT_TASK_SUCCESS,
-  payload: {taskId, text, status}
+  payload: { taskId, text, status },
   // openNotification{
   //   title: "Задача",
   //   text: "Задача успешно отредактирована",
   //   type: "success",
   // };
-})
+});
 
 // export const editTaskSuccess = (taskId, text, status) => {
 //   openNotification({
@@ -110,21 +109,20 @@ export const editTaskFailure = (dispatch, errResult) => {
 
 export const editTask = (id, text, status) => {
   return (dispatch, getState) => {
-    let usedStatus = status;
-    let usedText = text;
+    let newStatus = status;
+    let newdText = text;
     let token = window.localStorage.getItem("user_auth_token");
-    
+
     if (!status && status !== 0) {
-      usedStatus = getState().tasks.tasks.find((x) => x.id === id).status;
-      console.log(`usedStatus`,usedStatus)
+      newStatus = getState().tasks.tasks.find((x) => x.id === id).status;
     }
     if (!text) {
-      usedText = getState().tasks.tasks.find((x) => x.id === id).text;
+      newdText = getState().tasks.tasks.find((x) => x.id === id).text;
     }
 
-    editTaskApi(token, id, usedText, usedStatus)
+    editTaskApi(token, id, newdText, newStatus)
       .then((result) => {
-        dispatch(editTaskSuccess(result, id, usedText, usedStatus));
+        dispatch(editTaskSuccess(result, id, newdText, newStatus));
       })
       .catch((err) => {
         dispatch(editTaskFailure(err));

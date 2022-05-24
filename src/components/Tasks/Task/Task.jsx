@@ -9,7 +9,7 @@ import { editTask } from "@store/GetTask/actions";
 
 import "./Task.scss";
 
-const convertStatusToText = (statusCode) => {
+const setStatusText = (statusCode) => {
   switch (statusCode) {
     case 0:
       return "Задача не выполнена";
@@ -29,10 +29,10 @@ const Task = ({ task }) => {
   const dispatch = useDispatch();
   const { isAuth } = useSelector(authSelector);
 
-  // const status = useSelector(state => state.tasks.tasks.find((s)=> s.id === 0).status);
-
   const [text, setText] = useState(task.text);
-  const [checkboxStatus, setСheckboxStatus] = useState("Задача не выполнена");
+  const [checkboxStatus, setСheckboxStatus] = useState(
+    setStatusText(task.status)
+  );
 
   const handleBlur = () => {
     dispatch(editTask(task.id, text, undefined));
@@ -55,7 +55,7 @@ const Task = ({ task }) => {
   const onChangeCheckbox = (e) => {
     const newStatus = e.target.checked ? 10 : 0;
     task.status = newStatus;
-    setСheckboxStatus('Задача выполнена')
+    setСheckboxStatus(setStatusText(newStatus));
     dispatch(editTask(task.id, undefined, newStatus));
   };
 
@@ -68,7 +68,6 @@ const Task = ({ task }) => {
           checked={task.status === 10}
           onChange={onChangeCheckbox}
         />
-
       );
     }
     return null;
