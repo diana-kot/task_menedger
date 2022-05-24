@@ -4,6 +4,8 @@ import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
 
 import "./TaskNavigation.scss";
 
+import { Button } from "antd";
+
 const TaskNavigation = ({
   activePage,
   pagesCount,
@@ -19,7 +21,6 @@ const TaskNavigation = ({
           className={cn({ "page__item-active": activePage === i })}
           key={i}
           onClick={() => changePage(i)}
-          disabled={i > pagesCount || i <= 0}
         >
           {i}
         </li>
@@ -35,20 +36,26 @@ const TaskNavigation = ({
   return (
     <>
       <div className="center">
-        <ul className="padination">
-          <li
-            className="btn btn-primary"
+        <ul className="pagination">
+          <Button
+            type="primary"
+            // className="btn btn-primary"
             onClick={() => changePage(activePage - 1)}
+            disabled={currentPage > pagesCount || currentPage <= 0}
           >
             <LeftCircleOutlined />
-          </li>
+          </Button>
           {pages}
-          <li
-            className="btn btn-primary"
+          <Button
+            // className="btn btn-primary"
             onClick={() => changePage(activePage + 1)}
+            type="primary"
+            disabled={currentPage > pagesCount || currentPage <= 0}
+
+            // (1 <= pageNamber) && (pageNamber <= Math.ceil(pagesCount/3 ))
           >
             <RightCircleOutlined />
-          </li>
+          </Button>
         </ul>
       </div>
     </>

@@ -31,20 +31,25 @@ body {
   padding-right: calc(30% - #{$maxWidth / 2});
 }
 
-
 @media (max-width: 1023px) {
   .container {
     padding-left: calc(40% - #{$widthSiteSml / 2});
     padding-right: calc(40% - #{$widthSiteSml / 2});
   }
-
 }
-
 
 @media (max-width: 767px) {
   .container {
     padding-left: 16px;
     padding-right: 16px;
   }
+}
 
+.table > :not(caption) > * > * {
+  border-bottom: 0px;
+}
+
+
+svg {
+  margin-left: 9px;
 }

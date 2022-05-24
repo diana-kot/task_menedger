@@ -12,7 +12,6 @@ function App() {
       <main className="main">
         <Routes>
           <Route path="/" element={<TaskPage />} />
-          {/* <Route path="/auth" element={<Auth />} /> */}
           <Route path="*" element={<h2>404</h2>} />
         </Routes>
       </main>

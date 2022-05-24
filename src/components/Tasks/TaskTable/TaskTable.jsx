@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { taskSelector } from "@store/GetTask/selector";
 import { Spin, Space } from "antd";
@@ -16,33 +16,39 @@ const TaskTable = () => {
   const dispatch = useDispatch();
 
   const tasks = useSelector(taskSelector);
-  // const tasks = useSelector(state => state.tasks.tasks);
   const { tasksCount, page, isTasksLoading, sortField, sortDirection } =
     useSelector(({ tasks }) => tasks);
 
   const pagesCount = tasksCount;
+  const sortFieldTask = sortField
+  const sortDirectionTask = sortDirection
+
+  
   const [activePage, setActivePage] = useState(page);
+
   const handleHeaderClick = (headerKey) => {
     return () => {
-      //  console.log(sortField)
-      if (tasks.sortField === headerKey) {
-        dispatch(
-          changeSort(headerKey, tasks.sortDirection === "asc" ? "desc" : "asc")
-        );
-      } else {
-        dispatch(changeSort(headerKey, "desc"));
-      }
+    
+     if (sortFieldTask === headerKey) {
+      dispatch(
+        changeSort(headerKey, sortDirectionTask === "asc" ? "desc" : "asc")
+      );
+    } else {
+      dispatch(changeSort(headerKey, "desc"));
+    }
     };
   };
 
   const getSortDirection = (headerKey) => {
-    return tasks.sortField === headerKey ? tasks.sortDirection : null;
+    return sortFieldTask === headerKey ? sortDirectionTask : null;
   };
 
   const onchangePage = (pageNamber) => {
-    dispatch(setTasksPage(pageNamber));
-    dispatch(loadTasks(pageNamber));
-    setActivePage(pageNamber);
+    if (1 <= pageNamber && pageNamber <= Math.ceil(pagesCount / 3)) {
+      setActivePage(pageNamber);
+      dispatch(setTasksPage(pageNamber));
+      dispatch(loadTasks(pageNamber));
+    }
   };
 
   React.useEffect(() => {
@@ -54,7 +60,14 @@ const TaskTable = () => {
       <table className="table">
         <thead>
           <tr>
-            <SortTask
+          <SortTask
+              onClick={handleHeaderClick("id")}
+              sortDirection={getSortDirection("id")}
+              style={{ width: "15%" }}
+            >
+              id
+            </SortTask>
+          <SortTask
               onClick={handleHeaderClick("username")}
               sortDirection={getSortDirection("username")}
               style={{ width: "15%" }}
@@ -83,19 +96,22 @@ const TaskTable = () => {
 
         <tbody>
           {isTasksLoading ? (
-            <tr className="loader">
-              <td>
+            <tr style={{ width: "100%" }}>
+              <td colSpan="4" className="loader">
                 <Space size="middle">
                   <Spin size="large" />
                 </Space>
               </td>
             </tr>
           ) : (
-            tasks.map((task) => <Task key={task.id} task={task} />)
+            <>
+              {tasks.map((task) => (
+                <Task key={task.id} task={task} />
+              ))}
+            </>
           )}
         </tbody>
       </table>
-
       <TaskNavigation
         pagesCount={pagesCount}
         currentPage={page}

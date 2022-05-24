@@ -1,8 +1,6 @@
 import { getTasks, editTask as editTaskApi } from "@utils/api/index";
 import { openNotification } from "@utils/helpers";
 
-import axios from "axios";
-
 import { logout } from "../Auth/actions";
 
 export const TASK_LOADING_IN_PROGRESS = "TASK_LOADING_IN_PROGRESS";
@@ -22,8 +20,6 @@ export const setTasksPage = (page) => ({
   payload: page,
 });
 
-
-
 export const setTasksTotalTaskCount = (total_task_count) => ({
   type: TASKS_CHANGE_TOTAL_TASK_COUNT,
   payload: total_task_count,
@@ -36,7 +32,9 @@ export const loadTasksFailure = (error) => ({
 
 export const loadTasksSuccess = (tasks, page, tasksCount) => ({
   type: TASK_LOADING_SUCCESS,
-  payload: tasks, page, tasksCount
+  payload: tasks,
+  page,
+  tasksCount,
 });
 
 export const loadTasksInProgress = () => ({
@@ -63,30 +61,7 @@ export const loadTasks = () => async (dispatch, getState) => {
       }
     });
   });
-
-  // try {
-  //   axios
-  //     .get(
-  //       `https://uxcandy.com/~shapoval/test-task-backend/v2/?developer=diana
-  // &sort_field=${sortField}&sort_direction=${sortDirection}&page=${page}`
-  //     )
-  //     .then(({ data }) => {
-  //       dispatch(
-  //         loadTasksSuccess(
-  //           data.message.tasks,
-  //         )
-  //       );
-  //     });
-  //   } catch (error) {
-  //     dispatch(loadTasksFailure(error));
-  //     console.warn(error);
-  //   }
 };
-
-export const setSorting = (sortField, sortDirection) => ({
-  type: CHANGE_SORT,
-  payload: { sortField, sortDirection },
-});
 
 export const changeSort = (sortField, sortDirection) => {
   return (dispatch, getState) => {
@@ -96,14 +71,30 @@ export const changeSort = (sortField, sortDirection) => {
   };
 };
 
-export const editTaskSuccess = (taskId, text, status) => {
-  openNotification({
-    title: "Задача",
-    text: "Задача успешно отредактирована",
-    type: "success",
-  });
-  return { type: EDIT_TASK_SUCCESS, payload: { taskId, text, status } };
-};
+export const setSorting = (sortField, sortDirection) => ({
+  type: CHANGE_SORT,
+  payload: {sortField, sortDirection}
+});
+
+
+export const editTaskSuccess = (taskId, text, status) => ({
+  type: EDIT_TASK_SUCCESS,
+  payload: {taskId, text, status}
+  // openNotification{
+  //   title: "Задача",
+  //   text: "Задача успешно отредактирована",
+  //   type: "success",
+  // };
+})
+
+// export const editTaskSuccess = (taskId, text, status) => {
+//   openNotification({
+//     title: "Задача",
+//     text: "Задача успешно отредактирована",
+//     type: "success",
+//   });
+//   return { type: EDIT_TASK_SUCCESS, payload: taskId, text, status  };
+// };
 
 export const editTaskFailure = (dispatch, errResult) => {
   if (errResult && errResult.message && errResult.message.token) {
@@ -122,9 +113,10 @@ export const editTask = (id, text, status) => {
     let usedStatus = status;
     let usedText = text;
     let token = window.localStorage.getItem("user_auth_token");
-
+    
     if (!status && status !== 0) {
       usedStatus = getState().tasks.tasks.find((x) => x.id === id).status;
+      console.log(`usedStatus`,usedStatus)
     }
     if (!text) {
       usedText = getState().tasks.tasks.find((x) => x.id === id).text;
@@ -133,7 +125,6 @@ export const editTask = (id, text, status) => {
     editTaskApi(token, id, usedText, usedStatus)
       .then((result) => {
         dispatch(editTaskSuccess(result, id, usedText, usedStatus));
-        // dispatch(loadTasks());
       })
       .catch((err) => {
         dispatch(editTaskFailure(err));

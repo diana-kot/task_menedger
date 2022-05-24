@@ -1,4 +1,4 @@
-.padination {
+.pagination {
   padding: 0;
   margin: 0;
   display: flex;
@@ -7,7 +7,7 @@
 
 .page__item {
   color: black;
-  padding: 11px 16px;
+  padding: 8px 16px;
   transition: background-color 0.1s;
   border: 1px solid #ddd;
   cursor: pointer;
@@ -20,11 +20,35 @@
 .center {
   display: flex;
   justify-content: center;
+  height: calc(100vh - 100px);
+  align-items: center;
 }
 
 .page__item-active {
   background-color: #4caf50;
   color: white;
   border: 1px solid #4caf50;
+  padding: 8px 16px;
+}
+
+.button__page {
+  box-sizing: border-box;
   padding: 11px 16px;
+  color: #fff;
+  background: #1890ff;
+  border: 1px solid #ddd;
+  transition: .1s;
+  cursor: pointer;
+ &:hover{
+  background: darken(#1890ff, 10%) ;
+ }
+
+}
+
+.button__page:disabled
+.button:disabled:hover {
+  color: black;
+  background-color: transparent;
+  transition: .4s;
+    cursor: auto;
 }

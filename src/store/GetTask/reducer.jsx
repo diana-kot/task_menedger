@@ -16,7 +16,7 @@ export const taskState = {
   tasksCount: 0,
   page: 1,
   isAddTaskPopupOpen: false,
-  sortField: "id",
+  sortField: "id", 
   sortDirection: "asc",
 };
 

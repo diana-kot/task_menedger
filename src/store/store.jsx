@@ -6,9 +6,10 @@ import { combineReducers } from "redux";
 import { authReducer } from "./Auth/reducer";
 import { tasksReducer } from "./GetTask/reducer";
 
+
 const rootReducer = combineReducers({
   auth: authReducer,
-  tasks: tasksReducer,
+  tasks: tasksReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

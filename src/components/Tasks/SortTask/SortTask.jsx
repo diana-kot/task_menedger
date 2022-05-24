@@ -8,8 +8,9 @@ const SortTask = ({ children, className, onClick, sortDirection, style }) => {
   return (
     <th onClick={onClick} style={style}>
       {children}
-      {sortDirection === "desc" || <CaretDownOutlined />}
-      {sortDirection === "asc" || <CaretUpOutlined />}
+      
+      {sortDirection === "desc" && <CaretDownOutlined />}
+      {sortDirection === "asc" && <CaretUpOutlined />}
     </th>
   );
 };

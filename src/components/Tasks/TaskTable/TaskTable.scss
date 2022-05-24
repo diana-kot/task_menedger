@@ -1,4 +1,14 @@
 .ant-checkbox-wrapper {
-    display: flex;
-    gap: 20px;
+  display: flex;
+  gap: 20px;
 }
+
+.loader {
+    position: absolute;
+    width: 100%;
+    left: 50%;
+    top: 40%;
+    border-bottom: none;
+}
+
+
