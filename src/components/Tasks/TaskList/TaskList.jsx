@@ -5,8 +5,12 @@ import "./TaskList.scss";
 const TaskList = () => {
   return (
     <>
-      <h3 className="table__tatle">Таблица задач</h3>
-      <TaskTable/>
+    <div className="table__container">
+
+    <h3 className="table__tatle">Таблица задач</h3>
+    <TaskTable/>
+    </div>
+      
   
     </>
   );

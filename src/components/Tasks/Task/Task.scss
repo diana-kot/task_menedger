@@ -1,5 +1,17 @@
-.checkbox {
+.checkbox-one {
   display: inline-block;
   margin-right: 10px;
   width: 30px;
+}
+
+.checkbox-two {
+  display: inline-block;
+  margin-right: 10px;
+  width: 80px;
+  background-color: aqua;
+}
+
+.input {
+  min-width: 350px;
+  border: none;
 }

@@ -13,17 +13,16 @@ const setStatusText = (statusCode) => {
   switch (statusCode) {
     case 0:
       return "Задача не выполнена";
+    case 1:
+      return "Задача не выполнена, отредактирована админом";
     case 10:
       return "Задача выполнена";
+    case 11:
+      return "Задача отредактирована админом и выполнена";
     default:
-      return "Неизвестно";
+      return "Задача не выполненатно";
   }
 };
-
-// case 1:
-//       return "Задача не выполнена, отредактирована админом";
-// case 11:
-//       return "Задача отредактирована админом и выполнена";
 
 const Task = ({ task }) => {
   const dispatch = useDispatch();
@@ -33,9 +32,29 @@ const Task = ({ task }) => {
   const [checkboxStatus, setСheckboxStatus] = useState(
     setStatusText(task.status)
   );
+  const [inputStatus, setInputStatus] = useState("");
 
-  const handleBlur = () => {
-    dispatch(editTask(task.id, text, undefined));
+  const handleBlur = (e) => {
+    console.log("value", e.target.value);
+    if (e.target.value) {
+      console.log("Есть значение");
+      //  setInputStatus(task.text);
+      dispatch(editTask(task.id, text, undefined));
+      // setInputStatus(setStatusText(11));
+      setСheckboxStatus(setStatusText(1));
+      const newStatus = 1;
+      dispatch(editTask(task.id, undefined, newStatus));
+    } else {
+      console.log("нет значения");
+      setText(task.text);
+      setСheckboxStatus(setStatusText(0));
+      const newStatus = 0;
+      dispatch(editTask(task.id, undefined, newStatus));
+    }
+  };
+
+  const onChangeInputText = (e) => {
+    setText(e.target.value);
   };
 
   const renderText = () => {
@@ -46,28 +65,66 @@ const Task = ({ task }) => {
       <Input
         placeholder="Изменить текст..."
         value={text}
-        onChange={(e) => setText(e.target.value)}
+        onChange={onChangeInputText}
         onBlur={handleBlur}
       />
     );
   };
 
   const onChangeCheckbox = (e) => {
-    const newStatus = e.target.checked ? 10 : 0;
-    task.status = newStatus;
-    setСheckboxStatus(setStatusText(newStatus));
-    dispatch(editTask(task.id, undefined, newStatus));
+    if (text !== task.text) {
+      console.log(1);
+      const newStatus = e.target.checked ? 11 : 1;
+      task.status = newStatus;
+      console.log(1, newStatus);
+      setСheckboxStatus(setStatusText(newStatus)); // Задача отредактирована админом и выполнена
+      dispatch(editTask(task.id, undefined, newStatus));
+    } else {
+      console.log(2);
+      const newStatus = e.target.checked ? 10 : 0;
+      task.status = newStatus;
+      console.log(2, newStatus);
+      setСheckboxStatus(setStatusText(newStatus));
+      dispatch(editTask(task.id, undefined, newStatus));
+    }
   };
 
   const rendeCheckboxForAdmin = () => {
     if (isAuth) {
       return (
-        <input
-          className="checkbox"
-          type="checkbox"
-          checked={task.status === 10}
-          onChange={onChangeCheckbox}
-        />
+        <>
+          {text === task.text ? (
+            <input
+              className="checkbox-one"
+              type="checkbox"
+              checked={task.status === 10}
+              onChange={onChangeCheckbox}
+            />
+          ) : (
+            <input
+              className="checkbox-two"
+              type="checkbox"
+              checked={task.status === 11}
+              onChange={onChangeCheckbox}
+            />
+          )}
+          {/* <input
+            className="checkbox"
+            type="checkbox"
+            checked={task.status ? task.status === 10 : task.status === 11}
+            onChange={onChangeCheckbox}
+          /> */}
+          {/* {text !== task.text && task.status !== 10 ? (
+            <input
+              className="input"
+              type="text"
+              value={inputStatus}
+              onChange={onChangeCheckbox}
+            />
+          ) : (
+            ""
+          )} */}
+        </>
       );
     }
     return null;

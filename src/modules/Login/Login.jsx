@@ -94,7 +94,7 @@ const Login = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Напишите логин",
+                    message: "Поле является обязательным для заполнения",
                     whitespace: true,
                   },
                 ]}
@@ -113,11 +113,11 @@ const Login = () => {
                 rules={[
                   {
                     type: "password",
-                    message: "Невалидный пароль",
+                    message: "Неверный логин или пароль",
                   },
                   {
                     required: true,
-                    message: "Напишите пароль",
+                    message: "Поле является обязательным для заполнения",
                   },
                 ]}
               >

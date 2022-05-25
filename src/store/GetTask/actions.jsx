@@ -76,24 +76,14 @@ export const setSorting = (sortField, sortDirection) => ({
   payload: { sortField, sortDirection },
 });
 
-export const editTaskSuccess = (taskId, text, status) => ({
-  type: EDIT_TASK_SUCCESS,
-  payload: { taskId, text, status },
-  // openNotification{
+export const editTaskSuccess = (taskId, text, status) => {
+  // openNotification({
   //   title: "Задача",
   //   text: "Задача успешно отредактирована",
   //   type: "success",
-  // };
-});
-
-// export const editTaskSuccess = (taskId, text, status) => {
-//   openNotification({
-//     title: "Задача",
-//     text: "Задача успешно отредактирована",
-//     type: "success",
-//   });
-//   return { type: EDIT_TASK_SUCCESS, payload: taskId, text, status  };
-// };
+  // });
+  return { type: EDIT_TASK_SUCCESS, payload: taskId, text, status };
+};
 
 export const editTaskFailure = (dispatch, errResult) => {
   if (errResult && errResult.message && errResult.message.token) {
