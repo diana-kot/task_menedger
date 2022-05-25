@@ -1,8 +1,15 @@
 .table__tatle {
-    margin-bottom: 30px;
-    margin-top: 40px;
+  margin-bottom: 30px;
+  margin-top: 40px;
 }
 
 .table__container {
-    position: relative;
+  position: relative;
+}
+
+@media (max-width: 767px) {
+  .table__container {
+    overflow-x: auto;
+    overflow: auto;
+  }
 }

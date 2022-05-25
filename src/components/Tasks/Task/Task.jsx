@@ -35,16 +35,12 @@ const Task = ({ task }) => {
     console.log("value", e.target.value);
     if (e.target.value) {
       console.log("Есть значение");
-      dispatch(editTask(task.id, text, undefined));
-      setСheckboxStatus(setStatusText(1));
       const newStatus = 1;
-      dispatch(editTask(task.id, undefined, newStatus));
+      setСheckboxStatus(setStatusText(1));
+      dispatch(editTask(task.id, text, newStatus));
     } else {
       console.log("нет значения");
       setText(task.text);
-      setСheckboxStatus(setStatusText(0));
-      const newStatus = 0;
-      dispatch(editTask(task.id, undefined, newStatus));
     }
   };
 
@@ -68,17 +64,13 @@ const Task = ({ task }) => {
 
   const onChangeCheckbox = (e) => {
     if (text !== task.text) {
-      console.log(1);
       const newStatus = e.target.checked ? 11 : 1;
       task.status = newStatus;
-      console.log(1, newStatus);
       setСheckboxStatus(setStatusText(newStatus)); // Задача отредактирована админом и выполнена
       dispatch(editTask(task.id, undefined, newStatus));
     } else {
-      console.log(2);
       const newStatus = e.target.checked ? 10 : 0;
       task.status = newStatus;
-      console.log(2, newStatus);
       setСheckboxStatus(setStatusText(newStatus));
       dispatch(editTask(task.id, undefined, newStatus));
     }
@@ -90,14 +82,14 @@ const Task = ({ task }) => {
         <>
           {text === task.text ? (
             <input
-              className="checkbox-one"
+              className="checkbox"
               type="checkbox"
               checked={task.status === 10}
               onChange={onChangeCheckbox}
             />
           ) : (
             <input
-              className="checkbox-two"
+              className="checkbox"
               type="checkbox"
               checked={task.status === 11}
               onChange={onChangeCheckbox}

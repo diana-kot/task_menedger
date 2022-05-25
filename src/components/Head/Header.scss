@@ -36,3 +36,22 @@
     }
   }
 }
+
+@media (max-width: 767px) {
+
+  .header {
+    &__list {
+      display: flex;
+      gap: 0px;
+      margin-bottom: 0px;
+      align-items: center;
+    }
+  
+    &__link {
+      font-size: 11px;
+      line-height: 1px;
+    
+    }
+  }
+  
+}

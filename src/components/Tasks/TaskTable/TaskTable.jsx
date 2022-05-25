@@ -19,22 +19,20 @@ const TaskTable = () => {
     useSelector(({ tasks }) => tasks);
 
   const pagesCount = tasksCount;
-  const sortFieldTask = sortField
-  const sortDirectionTask = sortDirection
+  const sortFieldTask = sortField;
+  const sortDirectionTask = sortDirection;
 
-  
   const [activePage, setActivePage] = useState(page);
 
   const handleHeaderClick = (headerKey) => {
     return () => {
-    
-     if (sortFieldTask === headerKey) {
-      dispatch(
-        changeSort(headerKey, sortDirectionTask === "asc" ? "desc" : "asc")
-      );
-    } else {
-      dispatch(changeSort(headerKey, "desc"));
-    }
+      if (sortFieldTask === headerKey) {
+        dispatch(
+          changeSort(headerKey, sortDirectionTask === "asc" ? "desc" : "asc")
+        );
+      } else {
+        dispatch(changeSort(headerKey, "desc"));
+      }
     };
   };
 
@@ -59,14 +57,14 @@ const TaskTable = () => {
       <table className="table">
         <thead>
           <tr>
-          <SortTask
+            <SortTask
               onClick={handleHeaderClick("id")}
               sortDirection={getSortDirection("id")}
               style={{ width: "15%" }}
             >
               id
             </SortTask>
-          <SortTask
+            <SortTask
               onClick={handleHeaderClick("username")}
               sortDirection={getSortDirection("username")}
               style={{ width: "15%" }}
@@ -121,6 +119,4 @@ const TaskTable = () => {
   );
 };
 
-export default styled(TaskTable)`
-  with: 100%;
-`;
+export default TaskTable;

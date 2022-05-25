@@ -87,14 +87,20 @@ export const editTaskSuccess = (taskId, text, status) => {
 
 export const editTaskFailure = (dispatch, errResult) => {
   if (errResult && errResult.message && errResult.message.token) {
-    openNotification({
-      title: "Задача",
-      text: "Пожалуйста, авторизуйтесь.",
-      type: "error",
-    });
-    dispatch(logout(false));
+    let time = Number(window.localStorage.getItem("tokenTime"));
+    let now = new Date().getTime();
+    if (time < now) {
+      window.localStorage.removeItem("auth_token");
+      window.localStorage.removeItem("tokenTime");
+      openNotification({
+        title: "Задача",
+        text: "Токен истек",
+        type: "error",
+      });
+      dispatch(logout(false));
+      return { type: EDIT_TASK_FAILURE };
+    }
   }
-  return { type: EDIT_TASK_FAILURE };
 };
 
 export const editTask = (id, text, status) => {
@@ -116,8 +122,8 @@ export const editTask = (id, text, status) => {
         dispatch(editTaskSuccess(result, id, newdText, newStatus));
       })
       .catch((err) => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('tokenTime');
+        localStorage.removeItem("token");
+        localStorage.removeItem("tokenTime");
         dispatch(editTaskFailure(err));
         console.warn(err);
       });

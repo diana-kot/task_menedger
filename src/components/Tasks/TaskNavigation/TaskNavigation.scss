@@ -37,18 +37,25 @@
   color: #fff;
   background: #1890ff;
   border: 1px solid #ddd;
-  transition: .1s;
+  transition: 0.1s;
   cursor: pointer;
- &:hover{
-  background: darken(#1890ff, 10%) ;
- }
-
+  &:hover {
+    background: darken(#1890ff, 10%);
+  }
 }
 
-.button__page:disabled
-.button:disabled:hover {
+.button__page:disabled .button:disabled:hover {
   color: black;
   background-color: transparent;
-  transition: .4s;
-    cursor: auto;
+  transition: 0.4s;
+  cursor: auto;
+}
+
+@media (max-width: 767px) {
+  .page__item {
+    padding: 4px 5px;
+  }
+  .page__item-active {
+    padding: 4px 5px;
+  }
 }

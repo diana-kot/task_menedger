@@ -49,8 +49,8 @@ export const tasksReducer = (state = taskState, action) => {
                 id: action.taskId,
                 email: task.email,
                 username: task.username,
-                text: action.payload.text,
-                status: action.payload.status,
+                text: action.text,
+                status: action.status,
               }
             : task
         ),

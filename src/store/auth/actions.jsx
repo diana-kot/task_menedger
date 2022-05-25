@@ -14,17 +14,11 @@ export function loginSuccess(token) {
     type: "success",
   });
   window.localStorage.setItem("auth_token", token);
-  window.localStorage.setItem('tokenTime', Date.now()+36*24*100000);
+  window.localStorage.setItem('tokenTime', String(new Date().getTime() + 60 * 60 * 24 * 1000));
   return { type: LOGIN_SUCCESS, token };
 }
 
 export function loginFailed() {
-  let time = Number(window.localStorage.getItem("tokenTime"));
-  let now = new Date().getTime();
-  if (time < now) {
-    window.localStorage.removeItem("auth_token");
-    window.localStorage.removeItem("tokenTime");  
-  }
   openNotification({
     title: "Вход",
     text: "Учётные данные не найдены",
