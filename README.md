@@ -1,8 +1,7 @@
-# React Shop App
-## Ссылки
-- [Ссылка на проект](https://diana-kot.github.io/task_menedger/)
+# React task-menedger
+
 
 ## Скрипты
 ```bash
+npm install
 npm run start
-npm run deploy
