@@ -32,14 +32,12 @@ const Task = ({ task }) => {
   );
 
   const handleBlur = (e) => {
-    console.log("value", e.target.value);
     if (e.target.value) {
-      console.log("Есть значение");
       const newStatus = 1;
       setСheckboxStatus(setStatusText(1));
       dispatch(editTask(task.id, text, newStatus));
+      dispatch(editTask(task.id, text, undefined));
     } else {
-      console.log("нет значения");
       setText(task.text);
     }
   };
