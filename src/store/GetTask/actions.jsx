@@ -101,7 +101,8 @@ export const editTask = (id, text, status) => {
   return (dispatch, getState) => {
     let newStatus = status;
     let newdText = text;
-    let token = window.localStorage.getItem("user_auth_token");
+    let token = window.localStorage.getItem("auth_token");
+    let tokenTime = localStorage.getItem("tokenTime");
 
     if (!status && status !== 0) {
       newStatus = getState().tasks.tasks.find((x) => x.id === id).status;
@@ -115,6 +116,8 @@ export const editTask = (id, text, status) => {
         dispatch(editTaskSuccess(result, id, newdText, newStatus));
       })
       .catch((err) => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('tokenTime');
         dispatch(editTaskFailure(err));
         console.warn(err);
       });

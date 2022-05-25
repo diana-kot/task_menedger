@@ -1,10 +1,8 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Input } from "antd";
 
 import { authSelector } from "@store/Auth/selector";
-import { taskSelector } from "@store/GetTask/selector";
-import { Checkbox, Input } from "antd";
-
 import { editTask } from "@store/GetTask/actions";
 
 import "./Task.scss";
@@ -32,15 +30,12 @@ const Task = ({ task }) => {
   const [checkboxStatus, setСheckboxStatus] = useState(
     setStatusText(task.status)
   );
-  const [inputStatus, setInputStatus] = useState("");
 
   const handleBlur = (e) => {
     console.log("value", e.target.value);
     if (e.target.value) {
       console.log("Есть значение");
-      //  setInputStatus(task.text);
       dispatch(editTask(task.id, text, undefined));
-      // setInputStatus(setStatusText(11));
       setСheckboxStatus(setStatusText(1));
       const newStatus = 1;
       dispatch(editTask(task.id, undefined, newStatus));
@@ -108,22 +103,6 @@ const Task = ({ task }) => {
               onChange={onChangeCheckbox}
             />
           )}
-          {/* <input
-            className="checkbox"
-            type="checkbox"
-            checked={task.status ? task.status === 10 : task.status === 11}
-            onChange={onChangeCheckbox}
-          /> */}
-          {/* {text !== task.text && task.status !== 10 ? (
-            <input
-              className="input"
-              type="text"
-              value={inputStatus}
-              onChange={onChangeCheckbox}
-            />
-          ) : (
-            ""
-          )} */}
         </>
       );
     }

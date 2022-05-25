@@ -1,17 +1,13 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Input, Form, Button } from "antd";
 
+import { addTask } from "@utils/api";
 import { openNotification } from "@utils/helpers";
-
-
-import { useDispatch } from "react-redux";
-import "./CreateTask.scss";
-
 import { loadTasks } from "@store/GetTask/actions";
 
-import { addTask } from "@utils/api";
-
 import addSvg from "../../assets/img/add.svg";
+import "./CreateTask.scss";
 
 const formItemLayout = {
   labelCol: {
@@ -101,7 +97,6 @@ const CreateTask = () => {
                 <Form
                   {...formItemLayout}
                   onFinish={handleSubmitFormTask}
-                 
                   labelCol={{ span: 8 }}
                   wrapperCol={{ span: 16 }}
                   form={form}

@@ -20,7 +20,7 @@ const injectDeveloperName = (path) => {
 
 function ServerValidateException(payload) {
   this.payload = payload;
-  this.message = "Запрос к серверу завершился ошибкой";
+  this.message = "Запрос завершился ошибкой";
 }
 
 const validateServerResponse = (response) => {
@@ -59,7 +59,7 @@ const Fetcher = {
   },
 };
 
-// // Actual api methods
+
 
 export const getTasks = async (page = 0, sortField, sortDirection) => {
   const result = await Fetcher.get(

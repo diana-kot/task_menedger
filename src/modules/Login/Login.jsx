@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, Navigate, useNavigate } from "react-router-dom";
+
 import { authSelector } from "@store/Auth/selector";
-import { logout, openLoginPopup } from "@store/Auth/actions";
 import LoginButton from "../../components/LoginButton";
 
 import { Form, Input } from "antd";
@@ -35,15 +34,15 @@ const tailFormItemLayout = {
 };
 
 const Login = () => {
-  const { isAuth } = useSelector(authSelector);
-  const [form] = Form.useForm();
-  // const navigate = useNavigate();
-  const [visibleForm, setFormVisible] = useState(false);
   const dispatch = useDispatch();
+
+  const { isAuth } = useSelector(authSelector);
+
+  const [form] = Form.useForm();
+
+  const [visibleForm, setFormVisible] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  // const user = useSelector((state) => state.authReducer);
 
   const toggleFormVisible = () => {
     setFormVisible(!visibleForm);
@@ -56,8 +55,6 @@ const Login = () => {
         setFormVisible(false);
       }
     }, 1000);
-
-    // navigate("/", { replace: true });
   };
 
   return (
@@ -68,10 +65,11 @@ const Login = () => {
         <div className="modal__over">
           <div className="modal__content">
             <div className="auth__top">
-                <img
-                 src={closeSvg} 
-                 alt="Close icon"
-                 onClick={toggleFormVisible} />
+              <img
+                src={closeSvg}
+                alt="Close icon"
+                onClick={toggleFormVisible}
+              />
               <h2>Авторизация</h2>
             </div>
             <Form
@@ -100,6 +98,7 @@ const Login = () => {
                 ]}
               >
                 <Input
+                  autoComplete="off"
                   size="large"
                   className="field"
                   placeholder="Логин"
@@ -122,6 +121,7 @@ const Login = () => {
                 ]}
               >
                 <Input
+                  autoComplete="new-password"
                   size="large"
                   type="password"
                   placeholder="Пароль"

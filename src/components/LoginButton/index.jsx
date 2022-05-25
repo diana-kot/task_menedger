@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "antd";
 
 import { useSelector, useDispatch } from "react-redux";
-import { logout, openLoginPopup } from "@store/Auth/actions";
+import { logout } from "@store/Auth/actions";
 
 import { authSelector } from "@store/Auth/selector";
 

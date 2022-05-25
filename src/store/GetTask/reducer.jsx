@@ -44,9 +44,9 @@ export const tasksReducer = (state = taskState, action) => {
       return {
         ...state,
         tasks: state.tasks.map((task) =>
-          task.id === action.payload.taskId
+          task.id === action.taskId
             ? {
-                id: action.payload.taskId,
+                id: action.taskId,
                 email: task.email,
                 username: task.username,
                 text: action.payload.text,

@@ -5,15 +5,10 @@ import { Provider } from "react-redux";
 
 import store from "@store/store";
 
-
-
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import "./scss/app.scss";
-
-
-
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

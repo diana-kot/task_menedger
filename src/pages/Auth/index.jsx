@@ -3,13 +3,11 @@ import styles from "./Auth.scss";
 
 const Auth = () => {
   return (
-    
-      <section className="auth">
-        <div className="auth__content">
-          <Login />
-        </div>
-      </section>
-   
+    <section className="auth">
+      <div className="auth__content">
+        <Login />
+      </div>
+    </section>
   );
 };
 

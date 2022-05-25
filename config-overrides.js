@@ -17,6 +17,7 @@ module.exports = function override(config, env) {
         '@assets': 'src/assets',
         '@scss': 'src/scss',
         '@pages': 'src/pages',
+        '@modules': 'src/modules',
     })(config);
 
     return config;

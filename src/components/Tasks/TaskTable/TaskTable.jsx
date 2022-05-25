@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import styled from "styled-components";
-import { taskSelector } from "@store/GetTask/selector";
-import { Spin, Space } from "antd";
 import { useSelector, useDispatch } from "react-redux";
+import styled from "styled-components";
+import { Spin, Space } from "antd";
 
+import { taskSelector } from "@store/GetTask/selector";
 import { loadTasks, changeSort, setTasksPage } from "@store/GetTask/actions";
-
 import SortTask from "../SortTask";
 import TaskNavigation from "../TaskNavigation";
 import Task from "../Task";

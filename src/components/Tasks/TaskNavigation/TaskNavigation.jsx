@@ -1,10 +1,9 @@
 import React from "react";
 import cn from "classnames";
 import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
+import { Button } from "antd";
 
 import "./TaskNavigation.scss";
-
-import { Button } from "antd";
 
 const TaskNavigation = ({
   activePage,
@@ -39,7 +38,6 @@ const TaskNavigation = ({
         <ul className="pagination">
           <Button
             type="primary"
-            // className="btn btn-primary"
             onClick={() => changePage(activePage - 1)}
             disabled={currentPage > pagesCount || currentPage <= 0}
           >
@@ -47,12 +45,9 @@ const TaskNavigation = ({
           </Button>
           {pages}
           <Button
-            // className="btn btn-primary"
             onClick={() => changePage(activePage + 1)}
             type="primary"
             disabled={currentPage > pagesCount || currentPage <= 0}
-
-            // (1 <= pageNamber) && (pageNamber <= Math.ceil(pagesCount/3 ))
           >
             <RightCircleOutlined />
           </Button>

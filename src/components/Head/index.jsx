@@ -1,13 +1,10 @@
-import { useSelector } from "react-redux";
-import CreateTask from "../../modules/CreateTask/CreateTask";
-import Login from "../../modules/Login/Login";
+import React from "react";
+import CreateTask from "@modules/CreateTask/CreateTask";
+import Login from "@modules/Login/Login";
 
-import { closeLoginPopup } from "../../store/Auth/actions";
-import styles from "./Header.scss";
+import "./Header.scss";
 
 const Header = () => {
-  const isLoginPopupOpen = useSelector((state) => state.tasksReducer);
-
   return (
     <header className="header">
       <div className="header__wrapper">
